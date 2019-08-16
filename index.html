@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html >
+<head>
+  
+  <meta charset="UTF-8">
+  <title>Kamus Indonesia-Dayak</title>
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+
+  <link rel='stylesheet prefetch' href='https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900|Material+Icons'>
+
+  <link rel="stylesheet" href="css/style.css">
+
+  
+</head>
+<script>
+function getXMLHttpRequest(){
+  if(window.ActiveXObject){
+    return new ActiveXObject("Microsoft.XMLHTTP");
+  }else if(window.XMLHttpRequest){
+    return new XMLHttpRequest();  
+  }else alert("Status : Can not create XMLHttpRequest Object");
+}
+var xmlhttp=getXMLHttpRequest();
+function sendRequest(pageURL,bahasa){
+  if(xmlhttp.readyState==4 || xmlhttp.readyState==0){
+    
+    xmlhttp.onreadystatechange=function(){
+      if(xmlhttp.readyState==4 && xmlhttp.status==200){
+      
+      if(bahasa=='indonesia'){
+      document.getElementById('konverdayak').value=xmlhttp.responseText;
+      }else if(bahasa=='dayak'){
+      document.getElementById('konverindonesia').value=xmlhttp.responseText;
+      }
+      }
+    }
+    xmlhttp.open('GET',pageURL,true);
+    xmlhttp.send(null); 
+  }
+}
+function konversi(bahasa){
+if(bahasa=='indonesia'){
+sendRequest('proses.php?kata='+document.getElementById('Bindonesia').value+'&bahasa=indonesia','indonesia'); 
+} else if(bahasa=='dayak'){
+sendRequest('proses.php?kata='+document.getElementById('Bdayak').value+'&bahasa=dayak','dayak'); 
+}
+}
+</script>
+
+<body>
+  
+<!-- Form-->
+<div class="form">
+  <!-- <div class="form-toggle"></div> -->
+  <div class="form-panel one">
+    <div class="form-header">
+      <h1>Indonesia-Dayak</h1>
+    </div>
+    <div class="form-content">
+      <form action="">
+        <div class="form-group">
+          <label for="Bindonesia">Bahasa Indonesia</label>
+          <input name="Bindonesia" type="text" id="Bindonesia" class="input" />
+        </div>
+        <div class="form-group">
+          <label for="konverdayak">Bahasa Dayak</label>
+          <input name="konverdayak" type="text" id="konverdayak" class="input color"/>
+        </div>
+        <div class="form-group">
+          <input type="button" value="TERJEMAH" onclick="konversi('indonesia');" class="submit"/>
+        </div>
+      </form>
+    </div>
+</body>
+
+</html>
